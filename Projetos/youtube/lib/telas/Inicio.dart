@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:youtube/Api.dart';
 import 'package:youtube/model/Video.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_youtube/flutter_youtube.dart';
 
 class Inicio extends StatefulWidget {
@@ -17,6 +14,7 @@ class Inicio extends StatefulWidget {
 
 class _InicioState extends State<Inicio> {
   _listarVideos(String pesquisa) {
+    print('Entrou na PESQUISA API');
     Api api = Api();
     return api.pesquisar(pesquisa);
   }
@@ -34,6 +32,7 @@ class _InicioState extends State<Inicio> {
               );
             case ConnectionState.active:
             case ConnectionState.done:
+              print('SNAPSHOT DATA: ${snapshot.data}');
               if (snapshot.hasData) {
                 return ListView.separated(
                     itemBuilder: (context, index) {

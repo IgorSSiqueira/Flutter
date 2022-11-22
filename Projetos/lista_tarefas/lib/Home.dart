@@ -13,7 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   List _listaTarefas = [];
   TextEditingController _controllerTarefa = TextEditingController();
 
@@ -32,27 +31,23 @@ class _HomeState extends State<Home> {
     setState(() {
       _listaTarefas.add(tarefa);
     });
-
     _salvarArquivo();
-    _controllerTarefa.text = '';
+
+    _controllerTarefa.text = "";
   }
 
   _salvarArquivo() async {
-
-    var arquivo = await _getFile()!;
+    var arquivo = await _getFile();
 
     String dados = json.encode(_listaTarefas);
     arquivo.writeAsString(dados);
-
   }
 
   _lerArquivo() async {
-    try{
-
+    try {
       final arquivo = await _getFile();
       return arquivo.readAsString();
-
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
@@ -68,9 +63,41 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Widget criarItemLista(context, index) {
+    final item = _listaTarefas[index]['titulo'];
+
+    return Dismissible(
+      key: Key(item),
+      direction: DismissDirection.endToStart,
+      onDismissed: (direction) {
+        _listaTarefas.removeAt(index);
+        _salvarArquivo();
+      },
+      background: Container(
+        color: Colors.red,
+        padding: EdgeInsets.all(16),
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Icon(
+            Icons.delete,
+            color: Colors.white,
+          )
+        ]),
+      ),
+      child: CheckboxListTile(
+          value: _listaTarefas[index]['realizada'],
+          title: Text(_listaTarefas[index]['titulo']),
+          onChanged: (valorAlterado) {
+            setState(() {
+              _listaTarefas[index]['realizada'] = valorAlterado;
+            });
+
+            _salvarArquivo();
+          }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
     //_salvarArquivo();
     print("itens: ${_listaTarefas.toString()}");
 
@@ -83,66 +110,37 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.purple,
-        onPressed: (){
+        onPressed: () {
           showDialog(
               context: context,
               builder: (context) {
-
                 return AlertDialog(
                   title: Text('Adicionar Tarefa'),
                   content: TextField(
                     controller: _controllerTarefa,
-                    decoration: InputDecoration(
-                      labelText: 'Digite sua tarefa'
-                    ),
-                    onChanged: (text){
-
-                    },
+                    decoration: InputDecoration(labelText: 'Digite sua tarefa'),
+                    onChanged: (text) {},
                   ),
                   actions: [
                     TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Cancelar')
-                    ),
+                        child: Text('Cancelar')),
                     TextButton(
-                        onPressed: (){
+                        onPressed: () {
                           _salvarTarefa();
                           Navigator.pop(context);
                         },
-                        child: Text('Salvar')
-                    )
+                        child: Text('Salvar'))
                   ],
                 );
-              }
-          );
+              });
         },
       ),
       body: Column(
         children: [
-          Expanded(child: ListView.builder(
-            itemCount: _listaTarefas.length,
-              itemBuilder: (context, index){
-
-              return CheckboxListTile(
-                  value: _listaTarefas[index]['realizada'],
-                  title: Text(_listaTarefas[index]['titulo']),
-                  onChanged: (valorAlterado){
-                    setState(() {
-                      _listaTarefas[index]['realizada'] = valorAlterado;
-                    });
-
-                    _salvarTarefa();
-                  }
-              );
-
-
-                /*return ListTile(
-                  title: Text(_listaTarefas[index]['titulo']),
-                );*/
-
-
-              })
-          )
+          Expanded(
+              child: ListView.builder(
+                  itemCount: _listaTarefas.length, itemBuilder: criarItemLista))
         ],
       ),
     );
