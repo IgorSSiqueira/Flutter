@@ -52,14 +52,14 @@ class _HomeState extends State<Home> {
                           content: Text(_itens[index]['descrição']),
                           actions: [
                             TextButton(
-                              onPressed: (){
+                              onPressed: () {
                                 print('Selecionado sim');
                                 Navigator.pop(context);
                               },
                               child: Text('Sim'),
                             ),
                             TextButton(
-                              onPressed: (){
+                              onPressed: () {
                                 print('Selecionado não');
                                 Navigator.pop(context);
                               },
