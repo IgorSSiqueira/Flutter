@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Resultado extends StatefulWidget {
-
   String? valor;
 
   Resultado(this.valor);
@@ -13,7 +12,6 @@ class Resultado extends StatefulWidget {
 class _ResultadoState extends State<Resultado> {
   @override
   Widget build(BuildContext context) {
-
     var caminhoImagem = 'images/moeda_cara.png';
     if (widget.valor == 'coroa') {
       caminhoImagem = 'images/moeda_coroa.png';
@@ -29,7 +27,7 @@ class _ResultadoState extends State<Resultado> {
           children: [
             Image.asset(caminhoImagem),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
               child: Image.asset('images/botao_voltar.png'),
@@ -40,4 +38,3 @@ class _ResultadoState extends State<Resultado> {
     );
   }
 }
-
