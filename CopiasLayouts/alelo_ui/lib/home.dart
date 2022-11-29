@@ -21,6 +21,18 @@ class _HomeState extends State<Home> {
     initialPage: 0,
   );
 
+  int _indexAtual = 0;
+
+  Widget _paddingBox(int boxColor) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        width: 100,
+        color: Color(boxColor),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,8 +218,46 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(height: 20),
+          SizedBox(
+            height: 160,
+            child: ListView(
+              controller: _controller3,
+              scrollDirection: Axis.horizontal,
+              children: [
+                _paddingBox(0xFF3E1E9D),
+                _paddingBox(0xFF1E4E3E),
+                _paddingBox(0xFF0F1A17),
+                _paddingBox(0xFF822A43),
+                _paddingBox(0xFF0A4A39),
+                _paddingBox(0xFF7BC00C),
+                _paddingBox(0xFF3E1E9D),
+              ],
+            ),
+          ),
+          SizedBox(height: 50)
         ],
       )),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _indexAtual,
+        onTap: (index) {
+          setState(() {
+            _indexAtual = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+              label: 'Início', icon: Icon(Icons.home, color: Colors.black)),
+          BottomNavigationBarItem(
+              label: 'Início', icon: Icon(Icons.percent, color: Colors.black)),
+          BottomNavigationBarItem(
+              label: 'Início',
+              icon: Icon(Icons.notifications_none, color: Colors.black)),
+          BottomNavigationBarItem(
+              label: 'Início',
+              icon: Icon(Icons.person_outline, color: Colors.black)),
+        ],
+      ),
     );
   }
 }
