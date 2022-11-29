@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -8,14 +9,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  PageController _controller = PageController(
+  final PageController _controller = PageController(
     initialPage: 0,
   );
 
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final PageController _controller2 = PageController(
+    initialPage: 0,
+  );
+
+  final PageController _controller3 = PageController(
+    initialPage: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +33,13 @@ class _HomeState extends State<Home> {
           title: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   'Olá, CLIENTE',
                   style: TextStyle(color: Color(0xFF1DA87E), fontSize: 20),
                 ),
                 SizedBox(width: 10),
-                const Text(
+                Text(
                   '=)',
                   style: TextStyle(fontSize: 20, color: Colors.purple),
                 ),
@@ -45,6 +49,7 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
           child: Column(
         children: [
+          const SizedBox(height: 5),
           SizedBox(
             height: 190,
             child: PageView(
@@ -52,40 +57,155 @@ class _HomeState extends State<Home> {
               scrollDirection: Axis.horizontal,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
+                  margin: const EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Color(0xFF1DA87E),
+                    color: const Color(0xFF1DA87E),
                   ),
                   child: Center(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('IBAGEM DO CARTÃO',
-                          style: TextStyle(color: Colors.white))
+                    children: const [
+                      Text('Alelo',
+                          style: TextStyle(color: Colors.white, fontSize: 20))
                     ],
                   )),
                   //child: Image.asset('img/alelo.png'),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
+                  margin: const EdgeInsets.only(left: 30, right: 30),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Color(0xFF1BBA38),
+                    color: const Color(0xFF1BBA38),
                   ),
                   child: Center(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('IBAGEM DO CARTÃO',
-                          style: TextStyle(color: Colors.white))
+                    children: const [
+                      Text('Alelo',
+                          style: TextStyle(color: Colors.white, fontSize: 20))
                     ],
                   )),
-                  //child: Image.asset('img/alelo.png'),
                 )
               ],
             ),
           ),
+          const SizedBox(height: 20),
+          SmoothPageIndicator(
+            controller: _controller,
+            count: 2,
+            effect: JumpingDotEffect(
+              dotColor: Colors.grey.shade400,
+              spacing: 4,
+              dotWidth: 10,
+              dotHeight: 10,
+              activeDotColor: Colors.grey.shade700,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                child: Column(children: [
+                  Row(children: const [
+                    Icon(
+                      Icons.store_mall_directory_rounded,
+                      color: Color(0xFF1DA87E),
+                    ),
+                  ]),
+                  const SizedBox(height: 6),
+                  Row(children: const [
+                    Text(
+                      'Onde aceita',
+                      style: TextStyle(fontSize: 14),
+                    )
+                  ]),
+                ]),
+              ),
+              Container(
+                child: Column(children: [
+                  Row(children: const [
+                    Icon(
+                      Icons.sell,
+                      color: Color(0xFF1DA87E),
+                    ),
+                  ]),
+                  const SizedBox(height: 6),
+                  Row(children: const [
+                    Text(
+                      'OFertas Exclusivas',
+                      style: TextStyle(fontSize: 14),
+                    )
+                  ]),
+                ]),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Descontos e Serviços',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 80,
+            child: PageView(
+              controller: _controller2,
+              scrollDirection: Axis.horizontal,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 30, right: 30),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF06251C),
+                  ),
+                  child: Center(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('Banner',
+                          style: TextStyle(color: Colors.white, fontSize: 20))
+                    ],
+                  )),
+                  //child: Image.asset('img/alelo.png'),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 30, right: 30),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF041549),
+                  ),
+                  child: Center(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('Banner',
+                          style: TextStyle(color: Colors.white, fontSize: 20))
+                    ],
+                  )),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          SmoothPageIndicator(
+            controller: _controller2,
+            count: 2,
+            effect: JumpingDotEffect(
+              dotColor: Colors.grey.shade400,
+              spacing: 4,
+              dotWidth: 10,
+              dotHeight: 10,
+              activeDotColor: Colors.grey.shade700,
+            ),
+          ),
+          const SizedBox(height: 20),
         ],
       )),
     );
