@@ -116,49 +116,45 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
-                child: Column(children: [
-                  Row(children: const [
-                    Icon(
-                      Icons.store_mall_directory_rounded,
-                      color: Color(0xFF1DA87E),
-                    ),
-                  ]),
-                  const SizedBox(height: 6),
-                  Row(children: const [
-                    Text(
-                      'Onde aceita',
-                      style: TextStyle(fontSize: 14),
-                    )
-                  ]),
+              Column(children: [
+                Row(children: const [
+                  Icon(
+                    Icons.store_mall_directory_rounded,
+                    color: Color(0xFF1DA87E),
+                  ),
                 ]),
-              ),
-              Container(
-                child: Column(children: [
-                  Row(children: const [
-                    Icon(
-                      Icons.sell,
-                      color: Color(0xFF1DA87E),
-                    ),
-                  ]),
-                  const SizedBox(height: 6),
-                  Row(children: const [
-                    Text(
-                      'OFertas Exclusivas',
-                      style: TextStyle(fontSize: 14),
-                    )
-                  ]),
+                const SizedBox(height: 6),
+                Row(children: const [
+                  Text(
+                    'Onde aceita',
+                    style: TextStyle(fontSize: 14),
+                  )
                 ]),
-              )
+              ]),
+              Column(children: [
+                Row(children: const [
+                  Icon(
+                    Icons.sell,
+                    color: Color(0xFF1DA87E),
+                  ),
+                ]),
+                const SizedBox(height: 6),
+                Row(children: const [
+                  Text(
+                    'Ofertas exclusivas',
+                    style: TextStyle(fontSize: 14),
+                  )
+                ]),
+              ])
             ],
           ),
           const SizedBox(height: 20),
           Row(
             children: const [
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.only(left: 20, top: 15),
                 child: Text(
                   'Descontos e Serviços',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -166,15 +162,15 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           SizedBox(
-            height: 80,
+            height: 100,
             child: PageView(
               controller: _controller2,
               scrollDirection: Axis.horizontal,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 30, right: 30),
+                  margin: const EdgeInsets.only(left: 20, right: 20),
                   decoration: const BoxDecoration(
                     color: Color(0xFF06251C),
                   ),
@@ -234,7 +230,7 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          SizedBox(height: 50)
+          const SizedBox(height: 50)
         ],
       )),
       bottomNavigationBar: BottomNavigationBar(
@@ -246,15 +242,16 @@ class _HomeState extends State<Home> {
         },
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               label: 'Início', icon: Icon(Icons.home, color: Colors.black)),
-          BottomNavigationBarItem(
-              label: 'Início', icon: Icon(Icons.percent, color: Colors.black)),
-          BottomNavigationBarItem(
-              label: 'Início',
+          const BottomNavigationBarItem(
+              label: 'Desconto',
+              icon: Icon(Icons.percent, color: Colors.black)),
+          const BottomNavigationBarItem(
+              label: 'Notificações',
               icon: Icon(Icons.notifications_none, color: Colors.black)),
-          BottomNavigationBarItem(
-              label: 'Início',
+          const BottomNavigationBarItem(
+              label: 'Opções',
               icon: Icon(Icons.person_outline, color: Colors.black)),
         ],
       ),
