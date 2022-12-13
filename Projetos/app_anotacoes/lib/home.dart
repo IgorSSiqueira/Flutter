@@ -1,3 +1,5 @@
+import 'package:app_anotacoes/helper/anotacaoHelper.dart';
+import 'package:app_anotacoes/model/anotacao.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,8 +10,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TextEditingController _tituloController = TextEditingController();
-  TextEditingController _descricaoController = TextEditingController();
+  final TextEditingController _tituloController = TextEditingController();
+  final TextEditingController _descricaoController = TextEditingController();
+  final _db = AnotacaoHelper();
+  List<Anotacao> _anotacoes = <Anotacao>[]; //List<Anotacao>();
 
   _exibirTelaCadastro() {
     showDialog(
@@ -22,12 +26,16 @@ class _HomeState extends State<Home> {
               controller: _tituloController,
               autofocus: true,
               decoration: const InputDecoration(
-                  labelText: 'Título', hintText: 'Digite título...'),
+                labelText: 'Título',
+                hintText: 'Digite título...',
+              ),
             ),
             TextField(
               controller: _descricaoController,
               decoration: const InputDecoration(
-                  labelText: 'Descrição', hintText: 'Digite descrição...'),
+                labelText: 'Descrição',
+                hintText: 'Digite descrição...',
+              ),
             ),
           ]),
           actions: [
@@ -38,6 +46,8 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () {
                 // salvar
+                _salvarAnotacao();
+
                 Navigator.pop(context);
               },
               child: Text('Salvar'),
@@ -46,6 +56,41 @@ class _HomeState extends State<Home> {
         );
       },
     );
+  }
+
+  _salvarAnotacao() async {
+    String titulo = _tituloController.text;
+    String descricao = _descricaoController.text;
+
+    //print('data atual: $DateTime.now()');
+    Anotacao anotacao = Anotacao(titulo, descricao, 'teste');
+    int resultado = await _db.salvarAnotacao(anotacao);
+
+    _tituloController.clear();
+    _descricaoController.clear();
+  }
+
+  _recuperarAnotacoes() async {
+    List anotacoesRecuperadas = await _db.recuperarAnotacoes();
+
+    List<Anotacao>? listaTemporaria = <Anotacao>[]; //List<Anotacao>();
+    for (var item in anotacoesRecuperadas) {
+      Anotacao anotacao = Anotacao.fromMap(item);
+      listaTemporaria.add(anotacao);
+    }
+
+    setState(() {
+      _anotacoes = listaTemporaria!;
+    });
+    listaTemporaria = null;
+
+    print('Lista anotacoes: $anotacoesRecuperadas.toString()');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _recuperarAnotacoes();
   }
 
   @override
