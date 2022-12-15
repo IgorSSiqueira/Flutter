@@ -1,6 +1,8 @@
 import 'package:app_anotacoes/helper/anotacaoHelper.dart';
 import 'package:app_anotacoes/model/anotacao.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -68,6 +70,8 @@ class _HomeState extends State<Home> {
 
     _tituloController.clear();
     _descricaoController.clear();
+
+    _recuperarAnotacoes();
   }
 
   _recuperarAnotacoes() async {
@@ -87,6 +91,18 @@ class _HomeState extends State<Home> {
     print('Lista anotacoes: $anotacoesRecuperadas.toString()');
   }
 
+  _formatarData(String? data) {
+    initializeDateFormatting('pt_BR');
+
+    var formatador = DateFormat('y/M/d');
+
+    DateTime dataConvertida = DateTime.parse(data!);
+
+    String dataFormatada = formatador.format(dataConvertida);
+
+    return dataFormatada;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -100,7 +116,24 @@ class _HomeState extends State<Home> {
         title: const Text('Minhas anotações'),
         backgroundColor: Colors.lightGreen,
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          Expanded(
+              child: ListView.builder(
+                  itemCount: _anotacoes.length,
+                  itemBuilder: (context, index) {
+                    final anotacao = _anotacoes[index];
+
+                    return Card(
+                      child: ListTile(
+                        title: Text(anotacao.titulo!),
+                        subtitle: Text(
+                            '${_formatarData(anotacao.data)} - ${anotacao.descricao}'),
+                      ),
+                    );
+                  }))
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,
