@@ -1,3 +1,5 @@
+import 'package:app_anotacoes/helper/anotacaoHelper.dart';
+
 class Anotacao {
   int? id;
   String? titulo;
@@ -7,21 +9,23 @@ class Anotacao {
   Anotacao(this.titulo, this.descricao, this.data);
 
   Anotacao.fromMap(Map map) {
-    this.id = map['id'];
-    this.titulo = map['titulo'];
-    this.descricao = map['descricao'];
-    this.data = map['data'];
+    id = map['id'];
+    titulo = map['titulo'];
+    descricao = map['descricao'];
+    data = map['data'];
   }
 
   Map toMap() {
     Map<String, dynamic> map = {
-      'titulo': this.titulo,
-      'descricao': this.descricao,
-      'data': this.data,
+      'titulo': titulo,
+      'descricao': descricao,
+      'data': data,
     };
-    if (this.id != null) {
-      map['id'] = this.id;
+
+    if (id != null) {
+      map['id'] = id;
     }
+
     return map;
   }
 }
