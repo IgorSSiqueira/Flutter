@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:aprenda_ingles/telas/home.dart';
 import 'package:flutter/material.dart';
 
@@ -7,8 +9,6 @@ void main() {
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       brightness: Brightness.light,
-      //primaryColor: Colors.purple,
-      //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.green),
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: const Color(0xff795548),
         secondary: Colors.white,
