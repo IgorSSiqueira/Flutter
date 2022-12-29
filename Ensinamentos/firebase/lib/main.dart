@@ -47,12 +47,30 @@ void main() async {
     print('dados usuarios: ${dados['nome']} - ${dados['idade']}');
   }*/
 
-  db.collection('usuarios').snapshots().listen((snapshot) {
+  //ESTE COMANDO FAZ COM QUE O BANCO 'AVISE' QUANDO FOR INCLUÍDO ALGO NOVO
+  //ATUALIZANDO ENTÃO A LISTA DO APLICATIVO
+  /*db.collection('usuarios').snapshots().listen((snapshot) {
     for (DocumentSnapshot item in snapshot.documents) {
       var dados = item.data;
       print('dados usuarios: ${dados['nome']} - ${dados['idade']}');
     }
-  });
+  });*/
+
+  //FILTROS
+  QuerySnapshot querySnapshot = await db
+      .collection('usuarios')
+      //.where('nome', isEqualTo: 'teste')
+      //.where('idade', isEqualTo: 25)
+      .where('idade', isGreaterThan: 15)
+      //.where('idade', isLessThan: 35)
+      .orderBy('idade', descending: true)
+      .orderBy('nome', descending: false)
+      .getDocuments();
+
+  for (DocumentSnapshot item in querySnapshot.documents) {
+    var dados = item.data;
+    print('Filtro nome: ${dados['nome']} idade: ${dados['idade']}');
+  }
 
   runApp(const MyApp());
 }
