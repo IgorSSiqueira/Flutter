@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() async {
   //Inicializar Firebase
@@ -85,22 +86,83 @@ void main() async {
   String email = 'igor@gmail.com';
   String senha = '123456';
 
-  auth
+  /*auth
       .createUserWithEmailAndPassword(email: email, password: senha)
-      .then((FirebaseUser) {
-    print('novo usuário: sucesso! e-mail: ${FirebaseUser}');
+      .then((firebaseUser) {
+    print('novo usuário: sucesso! e-mail: ${firebaseUser.email}');
   }).catchError((erro) {
     print('novo usuário: erro ${erro.toString()}');
   });
+  */
 
-  runApp(const MyApp());
+  //DESLOGAR USUÁRIO
+  //auth.signOut();
+
+  //LOGANDO USUÁRIO
+  /*auth
+      .signInWithEmailAndPassword(email: email, password: senha)
+      .then((firebaseUser) {
+    print('Usuário Logado: sucesso! e-mail: ${firebaseUser.email}');
+  }).catchError((erro) {
+    print('Logar usuário: erro ${erro.toString()}');
+  });*/
+
+  /*auth.signOut();
+
+  FirebaseUser usuarioAtual = await auth.currentUser();
+  if (usuarioAtual != null) {
+    // LOGADO
+    print('Usuario atual logado email: ${usuarioAtual.email}');
+  } else {
+    //DESLOGADO
+    print('Usuario atual está deslogado');
+  }*/
+
+  /* ****************************************************************** */
+  /* *************************** AULA 156 + *************************** */
+  /* ****************************************************************** */
+
+  runApp(MaterialApp(home: Home()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({key});
+class Home extends StatefulWidget {
+  const Home({Key key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  Future _recuperarImagem(bool daCamera) async {
+    if (daCamera) {
+      //Pega da Camera
+      ImagePicker.pickImage(source: ImageSource.camera);
+    } else {
+      //Pega da Galeria
+      ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Selecionar imagem'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          ElevatedButton(
+              onPressed: () {
+                _recuperarImagem(true);
+              },
+              child: Text('Camera')),
+          ElevatedButton(
+              onPressed: () {
+                _recuperarImagem(false);
+              },
+              child: Text('Galeria')),
+        ]),
+      ),
+    );
   }
 }
